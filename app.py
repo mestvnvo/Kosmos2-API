@@ -1,40 +1,23 @@
 import gradio as gr
 from transformers import pipeline
+from PIL import Image
 
 # pipeline as high level
-pipe = pipeline("image-text-to-text", model="HuggingFaceTB/SmolVLM-500M-Instruct")
+pipe = pipeline("image-text-to-text", model="microsoft/kosmos-2-patch14-224")
 
-SYSTEM_PROMPT = f"""
-You are a image vibe AI and your job is to help users capture the energy and aesthetic of the scene.
-"""
-
-def get_image_vibe(image):
+def get_image_caption(image):
     if image is None:
         return "No image provided."
+    
+    image = image.convert("RGB")
 
-    messages = [
-        {
-            "role": "system",
-            "content": [
-                {"type": "text", "text": SYSTEM_PROMPT}
-            ]
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "image", "image": image},
-                {"type": "text", "text": "What are the people doing?"}
-            ]
-        }
-    ]
-
-    result = pipe(messages)
-    return result[0]['generated_text'][2]["content"]
+    result = pipe(image,text="Detailed")
+    return result[0]['generated_text']
 
 # api w/ gradio
 api = gr.Interface(
-    fn=get_image_vibe,
-    inputs=gr.Image(type="filepath", label="Input Image"),
+    fn=get_image_caption,
+    inputs=gr.Image(type="pil", label="Input Image"),
     outputs="text"
 )
 
