@@ -3,7 +3,10 @@ from transformers import pipeline
 from PIL import Image
 
 # pipeline as high level
-pipe = pipeline("image-text-to-text", model="microsoft/kosmos-2-patch14-224")
+pipe = pipeline("image-text-to-text", 
+    model="microsoft/kosmos-2-patch14-224",
+    device=-1,
+    )
 
 def get_image_caption(image):
     if image is None:
@@ -11,7 +14,9 @@ def get_image_caption(image):
     
     image = image.convert("RGB")
 
-    result = pipe(image,text="Detailed")
+    # max_new_tokens: limit tokens to trade detail for speed
+    # num beams: usually 4, for diversity; 1 for greedy decoding
+    result = pipe(image,text="Detailed", max_new_tokens=32, num_beams=1)
     return result[0]['generated_text']
 
 # api w/ gradio
