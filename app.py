@@ -5,9 +5,7 @@ from transformers import pipeline
 pipe = pipeline("image-text-to-text", model="HuggingFaceTB/SmolVLM-500M-Instruct")
 
 SYSTEM_PROMPT = f"""
-You are a image vibe AI and your job is to help users capture the energy 
-and aesthetic of the entire scene - mainly what the people are doing in their background.
-Respond only in one sentence and don't elaborate.
+You are a image vibe AI and your job is to help users capture the energy and aesthetic of the scene.
 """
 
 def get_image_vibe(image):
@@ -24,13 +22,14 @@ def get_image_vibe(image):
         {
             "role": "user",
             "content": [
-                {"type": "image", "image": image}
+                {"type": "image", "image": image},
+                {"type": "text", "text": "What are the people doing?"}
             ]
         }
     ]
 
     result = pipe(messages)
-    return result[0]['generated_text']
+    return result[0]['generated_text'][2]["content"]
 
 # api w/ gradio
 api = gr.Interface(
