@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # pipeline as high level
-pipe = pipeline("image-text-to-text", model="HuggingFaceM4/Idefics3-8B-Llama3")
+pipe = pipeline("image-text-to-text", model="HuggingFaceTB/SmolVLM-500M-Instruct")
 
 SYSTEM_PROMPT = f"""
 You are a image vibe AI and your job is to help users capture the energy 
