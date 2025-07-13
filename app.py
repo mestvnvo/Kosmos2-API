@@ -16,7 +16,7 @@ def get_image_caption(image):
 
     # max_new_tokens: limit tokens to trade detail for speed
     # num beams: usually 4, for diversity; 1 for greedy decoding
-    result = pipe(image,text="Detailed", max_new_tokens=32, num_beams=1, do_sample=False)
+    result = pipe(image,text="The person is", max_new_tokens=32, num_beams=1, do_sample=False)
     return result[0]['generated_text']
 
 # api w/ gradio
