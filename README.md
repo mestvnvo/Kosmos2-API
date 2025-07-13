@@ -1,3 +1,4 @@
+---
 title: Kosmos2-API
 emoji: 📈
 colorFrom: purple
@@ -7,3 +8,6 @@ sdk_version: 5.34.2
 app_file: app.py
 pinned: false
 short_description: (image-text-to-text) i like freeness pt 1
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
