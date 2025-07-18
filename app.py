@@ -9,8 +9,8 @@ pipe = pipeline("image-text-to-text",
     )
 
 def get_image_caption(image):
-    if image is None:
-        return "No image provided."
+    if not image:
+        raise gr.Error("No image provided.")
     
     image = image.convert("RGB")
 
